@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create book</title>
+</head>
+<body>
+<form action="#" th:action="@{/book-create}" th:object="${book}" method="post">
+    <label for="name">name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="name">
+    <label for="author">author</label>
+    <input type="text" th:field="*{author}" id="author" placeholder="author">
+    <input type="submit" value="Create Book">
+</form>
+</body>
+</html>
