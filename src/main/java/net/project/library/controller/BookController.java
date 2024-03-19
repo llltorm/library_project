@@ -3,6 +3,7 @@ package net.project.library.controller;
 import net.project.library.model.Book;
 import net.project.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @GetMapping("/books")
     public String findAll(Model model) {
         List<Book> books = bookService.findALL();
@@ -28,23 +30,27 @@ public class BookController {
         return "book-list";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/book-create")
     public String createBookForm(Book book) {
         return "book-create";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/book-create")
     public String createBook(Book book) {
         bookService.saveBook(book);
         return "redirect:/books";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/book-delete/{id}")
     public String deleteBook(@PathVariable("id") int id) {
         bookService.deleteById(id);
         return "redirect:/books";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("book-update/{id}")
     public String updateBookForm(@PathVariable("id") int id, Model model){
         Book book = bookService.findById(id);
@@ -52,10 +58,19 @@ public class BookController {
         return "/book-update";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("book-update")
     public String updateBook(Book book) {
         bookService.saveBook(book);
         return "redirect:/books";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("book-returned")
+    public String updateBook(@PathVariable("id") int id, Model model) {
+        Book book = bookService.findById(id);
+        model.addAttribute(book);
+        return "/book-update";
     }
 
 }

@@ -10,10 +10,10 @@
     <input readonly type="number" th:field="*{id}" id="id" placeholder="id">
     <br/>
     <label for="name">name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="name">
+    <input type="text" th:field="*{name}" id="name" placeholder="name" required minlength="2" maxlength="100">
     <br/>
     <label for="author">author</label>
-    <input type="text" th:field="*{author}" id="author" placeholder="author">
+    <input type="text" th:field="*{author}" id="author" placeholder="author" required minlength="2" maxlength="100">
     <br/>
     <input type="submit" value="Update User">
 </form>

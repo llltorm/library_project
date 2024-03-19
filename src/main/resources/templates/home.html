@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeLeaf.org/thymeLeaf-extras-springsecurity5">
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+<h1>Welcome to the Home Page</h1>
+<p>Please select an option:</p>
+<ul>
+    <li><a th:href="@{/books}">Book List</a></li>
+    <li><a th:href="@{/readers}">Reader List</a></li>
+    <li><a th:href="@{/takenBooks}">Taken Books List</a></li>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</ul>
+</body>
+</html>

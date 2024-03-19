@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="https://www.thymeLeaf.org/thymeLeaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:switch="${readers}">
+    <h2 th:case="null">No readers found!</h2>
+    <div th:case="*">
+        <h2>Readers</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Telegram</th>
+                <th>Book</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reader : ${readers}">
+                <td th:text="${reader.id}"></td>
+                <td th:text="${reader.name}"></td>
+                <td th:text="${reader.email}"></td>
+                <td th:text="${reader.telegram}"></td>
+                <td th:text="${reader.bookId}"></td>
+                <!-- <td th:each="book : ${reader.listTakenBooks}" th:text="${book}"></td> -->
+                <div sec:authorize="hasRole('ADMIN')">
+                    <td><a th:href="@{reader-update/{id}(id=${reader.id})}">Edit</a></td>
+                </div>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <td><a th:href="@{reader-delete/{id}(id=${reader.id})}">Delete</a></td>
+                </div>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <td><a th:href="@{reader-delete-take-book/{id}(id=${reader.id})}">Delete taken book</a></td>
+                </div>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <td><a th:href="@{add-take-book/{id}(id=${reader.id})}">Add book</a></td>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div sec:authorize="hasRole('ADMIN')">
+        <p><a href="/reader-create">Create reader</a></p>
+    </div>
+</div>
+</body>
+</html>

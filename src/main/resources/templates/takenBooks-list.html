@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="https://www.thymeLeaf.org/thymeLeaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:switch="${takenBooks}">
+    <h2 th:case="null">No taken books found!</h2>
+    <div th:case="*">
+        <h2>Taken books</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id reader</th>
+                <th>Id book</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="takenBook : ${takenBooks}">
+                <td th:text="${takenBook.id}"></td>
+                <td th:text="${takenBook.readerId}"></td>
+                <td th:text="${takenBook.book_id}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

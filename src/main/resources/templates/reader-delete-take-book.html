@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete take book</title>
+</head>
+<body>
+<div th:switch="${reader.listTakenBooks}">
+    <h2 th:case="null">No books found!</h2>
+    <div th:case="*">
+        <h2>Books</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${reader.listTakenBooks}">
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.name}"></td>
+              <!--  <td><a th:href="@{reader-book-delete/{idBook}(idBook=${book.id})} ">Delete</a></td> -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<!--<tr th:each="book : ${reader.listTakenBooks}">-->
+<!--    <td th:text="${book.id}"></td>-->
+<!--    <td th:text="${book.name}"></td>-->
+<!--    <td>-->
+<!--        <form th:action="@{delete_user}" method="post" th:object="${user}">-->
+<!--            <input type="hidden" th:field="${user.personId}"/>-->
+<!--            <button type="submit" value="Submit" class="btn btn-danger">Delete</button>-->
+<!--        </form>-->
+<!--    </td>-->
+<!--</tr>-->
+
+<!--<form action="#" th:action="@{/reader-delete-take-book}" th:object="${reader}" method="post">-->
+<!--  <tr th:each="reader : ${reader}">-->
+<!--      <td th:each="book : ${reader.listTakenBooks}" th:text="${book}"></td>-->
+<!--      <td><a th:href="@{reader-delete/{id}(id=${reader.id})}">Delete</a></td>-->
+<!--      <br/>-->
+<!--  </tr>-->
+<!--  <input type="submit" value="Update">-->
+<!--</form>-->
+</body>
+</html>

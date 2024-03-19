@@ -7,9 +7,9 @@
 <body>
 <form action="#" th:action="@{/book-create}" th:object="${book}" method="post">
     <label for="name">name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="name">
+    <input type="text" th:field="*{name}" id="name" placeholder="name" required minlength="2" maxlength="100">
     <label for="author">author</label>
-    <input type="text" th:field="*{author}" id="author" placeholder="author">
+    <input type="text" th:field="*{author}" id="author" placeholder="author" required minlength="2" maxlength="100">
     <input type="submit" value="Create Book">
 </form>
 </body>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="#" th:action="@{/add-take-book}" th:object="${reader}" method="post">
+    <label for="id">ID</label>
+    <input readonly type="number" th:field="*{id}" id="id" placeholder="id">
+    <br/>
+    <label for="name">name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="name" required minlength="2" maxlength="100">
+    <br/>
+    <label for="email">email</label>
+    <input type="text" th:field="*{email}" id="email" placeholder="email" required minlength="2" maxlength="100">
+    <br/>
+    <label for="telegram">telegram</label>
+    <input type="text" th:field="*{telegram}" id="telegram" placeholder="telegram" required minlength="2" maxlength="100">
+    <br/>
+    <th:block th:each="book : ${listBook}">
+        <input type="radio" th:field="*{bookId}" th:value="${book.id}" th:text="${book.name}"/>
+    </th:block>
+    <br/>
+    <input type="submit" value="Add book">
+</form>
+</body>
+</html>
