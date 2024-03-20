@@ -47,10 +47,6 @@ public class TelegramBot extends TelegramLongPollingBot {
                 case "/start":
                     startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
                     break;
-                case "/MyChatId":
-                    String stringChatId = "" + chatId;
-                    sendMessage(chatId, String.format(stringChatId));
-                    break;
                 default: sendMessage(chatId, "Sorry, command was not recognized(");
             }
         }
