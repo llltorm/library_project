@@ -1,5 +1,6 @@
 package net.project.library.controller;
 
+import net.project.library.config.PasswordConfig;
 import net.project.library.model.Book;
 import net.project.library.model.Reader;
 import net.project.library.model.Messages;
@@ -23,43 +24,51 @@ public class ReaderController {
     private final BookService bookService;
 
     private final MessageService messageService;
+    //private final PasswordConfig passwordConfig;
 
     @Autowired
     public ReaderController(ReaderService readerService, BookService bookService, MessageService messageService) {
         this.readerService = readerService;
         this.bookService = bookService;
         this.messageService = messageService;
+        //this.passwordConfig = passwordConfig;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/readers")
-    public String findAll(Model model) {
+    public String showFormWithAllReaders(Model model) {
         List<Reader> readers = readerService.findALL();
         model.addAttribute("readers", readers);
         return "reader-list";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/reader-create")
     public String createReaderForm(Reader reader) {
         return "reader-create";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/reader-create")
     public String createReader(Reader reader) {
         readerService.saveReader(reader);
+        reader.setRole("USER");
         return "redirect:/readers";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/reader-delete/{id}")
     public String deleteReader(@PathVariable("id") int id) {
         readerService.deleteById(id);
         return "redirect:/readers";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("reader-update/{id}")
     public String updateReaderForm(@PathVariable("id") int id, Model model){
         Reader reader = readerService.findById(id);
@@ -67,14 +76,16 @@ public class ReaderController {
         return "/reader-update";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("reader-update")
     public String updateReader(Reader reader) {
         readerService.saveReader(reader);
         return "redirect:/readers";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("add-take-book/{id}")
     public String showAddTakenBookForm(@PathVariable("id") int id, Model model) {
         Reader reader = readerService.findById(id);
@@ -92,14 +103,16 @@ public class ReaderController {
         return "/reader-add-take-book";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping ("add-take-book")
     public String addTakenBook(Reader reader) {
         readerService.saveReader(reader);
         return "redirect:/readers";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("reader-delete-take-book/{id}")
     public String deleteTakenBook(@PathVariable("id") int id, Model model) {
         Reader reader = readerService.findById(id);

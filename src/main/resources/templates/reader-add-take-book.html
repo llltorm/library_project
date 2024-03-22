@@ -22,17 +22,20 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/books}">Book List</a>
                 </li>
                 <li class="nav-item">
-                    <div sec:authorize="hasRole('ADMIN')">
+                    <!--                    <div sec:authorize="hasRole('ADMIN')">-->
+                    <div sec:authorize="hasAuthority('ADMIN')">
                         <a class="nav-link active" aria-current="page" th:href="@{/readers}">Reader List</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <div sec:authorize="hasRole('ADMIN')">
+                    <!--                    <div sec:authorize="hasRole('ADMIN')">-->
+                    <div sec:authorize="hasAuthority('ADMIN')">
                         <a class="nav-link" href="/reader-create">Create reader</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <div sec:authorize="hasRole('ADMIN')">
+                    <!--                    <div sec:authorize="hasRole('ADMIN')">-->
+                    <div sec:authorize="hasAuthority('ADMIN')">
                         <a class="nav-link" href="/book-create">Create book</a>
                     </div>
                 </li>
@@ -59,7 +62,8 @@
     <input type="text" th:field="*{email}" id="email" placeholder="email" required minlength="2" maxlength="100">
     <br/>
     <label for="telegram">telegram</label>
-    <input type="text" th:field="*{telegram}" id="telegram" placeholder="telegram" required minlength="2" maxlength="100">
+    <input type="number" th:field="*{telegram}" id="telegram" placeholder="telegramId" required min="1000000000" max="99999999999">
+
     <br/>
     <th:block th:each="book : ${listBook}">
         <input type="radio" th:field="*{bookId}" th:value="${book.id}" th:text="${book.name}"/>

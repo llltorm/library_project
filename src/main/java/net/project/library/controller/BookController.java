@@ -22,35 +22,39 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+    //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @GetMapping("/books")
     public String findAll(Model model) {
         List<Book> books = bookService.findALL();
         model.addAttribute("books", books);
         return "book-list";
     }
-
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/book-create")
     public String createBookForm(Book book) {
         return "book-create";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/book-create")
     public String createBook(Book book) {
         bookService.saveBook(book);
         return "redirect:/books";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/book-delete/{id}")
     public String deleteBook(@PathVariable("id") int id) {
         bookService.deleteById(id);
         return "redirect:/books";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("book-update/{id}")
     public String updateBookForm(@PathVariable("id") int id, Model model){
         Book book = bookService.findById(id);
@@ -58,14 +62,15 @@ public class BookController {
         return "/book-update";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("book-update")
     public String updateBook(Book book) {
         bookService.saveBook(book);
         return "redirect:/books";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("book-returned")
     public String updateBook(@PathVariable("id") int id, Model model) {
         Book book = bookService.findById(id);

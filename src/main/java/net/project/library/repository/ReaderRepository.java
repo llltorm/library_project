@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface ReaderRepository extends JpaRepository<Reader, Integer> {
 
+    Reader findByTelegram(String idChatUser);
     Reader findByName(String name);
     //List<Book> findBookBy
     //<User> findByUsernameAndAndPassword(String username, String password);

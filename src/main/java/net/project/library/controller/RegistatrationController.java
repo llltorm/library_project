@@ -3,6 +3,7 @@ package net.project.library.controller;
 import net.project.library.model.Reader;
 
 import net.project.library.repository.ReaderRepository;
+import net.project.library.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -54,6 +55,12 @@ public class RegistatrationController {
 //        return "logout";
 //    }
 
+    private final ReaderService readerService;
+
+    public RegistatrationController(ReaderService readerService) {
+        this.readerService = readerService;
+    }
+
     @GetMapping("/login")
     public String ShowLoginForm() {
         return "login";
@@ -72,6 +79,18 @@ public class RegistatrationController {
     public String redirectHomePage() {
         return "home";
     }
+
+//    @GetMapping("/registration")
+//    public String getRegisterStudent(Model model) {
+//        model.addAttribute("registerRequestStudent", new Reader());
+//        return "/registration";
+//    }
+//
+//    @PostMapping("/registration")
+//    public String registerStudent(@ModelAttribute Reader reader) {
+//        Reader registeredReader = readerService.register(reader.getName(), reader.getPassword());
+//        return "redirect:/login";
+//    }
 //@PostMapping("/login")
 //public String loginStudent(@ModelAttribute Student student, Model model) {
 //    System.out.println("login post request = " + student);
