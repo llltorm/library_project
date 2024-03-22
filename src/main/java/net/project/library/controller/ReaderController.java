@@ -71,6 +71,7 @@ public class ReaderController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("reader-update")
     public String updateReader(Reader reader) {
+        String password = reader.getPassword();
         readerService.saveReader(reader);
         return "redirect:/readers";
     }
@@ -102,18 +103,13 @@ public class ReaderController {
     @GetMapping("reader-delete-take-book/{id}")
     public String deleteTakenBook(@PathVariable("id") int id, Model model) {
         Reader reader = readerService.findById(id);
-        Messages message = new Messages();
-        if (reader.getBookId() != null) {
-            Book book = bookService.findById(reader.getBookId().getId());
-            String nameBook = book.getName();
-            message.setMessage("Книга " + nameBook + " вернулась в библиотеку");
-            System.out.println(message);
-            reader.setBookId(null);
-        }
+        Book book = bookService.findById(reader.getBookId().getId());
+        String nameBook = book.getName();
+        reader.setBookId(null);
         readerService.saveReader(reader);
-        if (reader.getBookId() != null) {
-            messageService.saveMessage(message);
-        }
+        Messages message = new Messages("Книга " + nameBook + " вернулась в библиотеку");
+        System.out.println(message);
+        messageService.saveMessage(message);
         return "redirect:/readers";
     }
 }
