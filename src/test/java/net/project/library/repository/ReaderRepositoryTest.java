@@ -1,4 +1,4 @@
-package net.project.library;
+package net.project.library.repository;
 
 import net.project.library.model.Book;
 import net.project.library.model.Reader;

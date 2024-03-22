@@ -1,4 +1,4 @@
-package net.project.library;
+package net.project.library.repository;
 
 import net.project.library.model.Book;
 import net.project.library.repository.BookRepository;
@@ -44,9 +44,10 @@ public class BookRepositoryTest {
         Book book = new Book();
         book.setName("Летающий слон");
         book.setAuthor("Борис Акунин");
+        repo.save(book);
         Book nameSaveBook = repo.findByName("Летающий слон");
         System.out.println(nameSaveBook.getName());
-        Assertions.assertEquals(nameSaveBook.getName(), "Тёмные начала");
+        Assertions.assertEquals(nameSaveBook.getName(), "Летающий слон");
     }
 
     @Test
