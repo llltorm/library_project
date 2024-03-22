@@ -15,11 +15,11 @@ public class AddTelegramToken {
     @Test
     public void addToken() {
         Reader reader = new Reader();
-        reader.setName("Admin Admin");
+        reader.setName("admin1");
         reader.setEmail("mail@mail.ru");
-        reader.setTelegram("343245657");
+        reader.setTelegram("1234567890");
         reader.setPassword("$2y$10$doARLHH1dHUCEBPgLW8xpuzpj9LJwBtBzo7rAb4Erin.P625U4tIG");
-        reader.setRole("USER");
+        reader.setRole("Admin");
         repo.save(reader);
     }
 
