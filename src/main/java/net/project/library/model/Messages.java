@@ -1,8 +1,5 @@
 package net.project.library.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity

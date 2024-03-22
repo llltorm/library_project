@@ -1,9 +1,7 @@
 package net.project.library.service;
 
 import net.project.library.model.Book;
-import net.project.library.model.Reader;
 import net.project.library.repository.BookRepository;
-import net.project.library.repository.ReaderRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

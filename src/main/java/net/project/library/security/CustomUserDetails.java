@@ -1,10 +1,9 @@
-package net.project.library.model;
+package net.project.library.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import net.project.library.model.Reader;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -20,9 +19,6 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(reader.getRole()));
-//        List<GrantedAuthority> roles = new ArrayList<>();
-//        roles.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));
-//        return roles;
     }
 
     @Override

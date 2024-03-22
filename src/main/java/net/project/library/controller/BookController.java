@@ -23,22 +23,20 @@ public class BookController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
-    //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @GetMapping("/books")
     public String findAll(Model model) {
         List<Book> books = bookService.findALL();
         model.addAttribute("books", books);
         return "book-list";
     }
+
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/book-create")
     public String createBookForm(Book book) {
         return "book-create";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/book-create")
     public String createBook(Book book) {
         bookService.saveBook(book);
@@ -46,7 +44,6 @@ public class BookController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/book-delete/{id}")
     public String deleteBook(@PathVariable("id") int id) {
         bookService.deleteById(id);
@@ -54,16 +51,14 @@ public class BookController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("book-update/{id}")
-    public String updateBookForm(@PathVariable("id") int id, Model model){
+    public String updateBookForm(@PathVariable("id") int id, Model model) {
         Book book = bookService.findById(id);
         model.addAttribute(book);
         return "/book-update";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("book-update")
     public String updateBook(Book book) {
         bookService.saveBook(book);
@@ -77,5 +72,4 @@ public class BookController {
         model.addAttribute(book);
         return "/book-update";
     }
-
 }

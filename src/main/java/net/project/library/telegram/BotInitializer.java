@@ -1,7 +1,6 @@
-package net.project.library.config;
+package net.project.library.telegram;
 
-import net.project.library.service.TelegramBot;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.project.library.telegram.bot.TelegramBot;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -18,13 +17,13 @@ public class BotInitializer {
     public BotInitializer(TelegramBot bot) {
         this.bot = bot;
     }
+
     @EventListener({ContextRefreshedEvent.class})
     public void init() throws TelegramApiException {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
         try {
             telegramBotsApi.registerBot(bot);
-        }
-        catch (TelegramApiException e) {
+        } catch (TelegramApiException e) {
 
         }
     }

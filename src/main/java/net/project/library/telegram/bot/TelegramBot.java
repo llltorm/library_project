@@ -1,12 +1,10 @@
-package net.project.library.service;
+package net.project.library.telegram.bot;
 
-import net.project.library.config.BotConfig;
+import net.project.library.telegram.BotConfig;
 import net.project.library.model.Messages;
 import net.project.library.model.Reader;
 import net.project.library.repository.MessageRepository;
 import net.project.library.repository.ReaderRepository;
-import org.aspectj.bridge.Message;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -19,7 +17,6 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private final ReaderRepository readerRepository;
     private final MessageRepository messageRepository;
-
     final BotConfig config;
 
     public TelegramBot(BotConfig config, MessageRepository messageRepository, ReaderRepository readerRepository) {
@@ -27,6 +24,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         this.messageRepository = messageRepository;
         this.readerRepository = readerRepository;
     }
+
     @Override
     public String getBotUsername() {
         return config.getBotName();
@@ -40,24 +38,26 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
 
-        if(update.hasMessage() && update.getMessage().hasText()) {
+        if (update.hasMessage() && update.getMessage().hasText()) {
             String messageText = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
-            switch (messageText){
+
+            switch (messageText) {
                 case "/start":
                     startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
                     break;
                 case "/MyChatId":
                     sendMessage(chatId, String.valueOf(chatId));
                     break;
-                default: sendMessage(chatId, "Sorry, command was not recognized(");
+                default:
+                    sendMessage(chatId, "Sorry, command was not recognized(");
             }
         }
 
     }
 
     private void startCommandReceived(long chatId, String name) {
-        String answer = "Hi " + name +", nice to meet you!";
+        String answer = "Hi " + name + ", nice to meet you!";
         sendMessage(chatId, answer);
     }
 
@@ -67,8 +67,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         message.setText(textToSend);
         try {
             execute(message);
-        }
-        catch(TelegramApiException e){
+        } catch (TelegramApiException e) {
 
         }
     }
@@ -78,15 +77,15 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             var messages = messageRepository.findAll();
             var readers = readerRepository.findAll();
-            for(Messages message: messages) {
+            for (Messages message : messages) {
                 for (Reader reader : readers) {
                     sendMessage(Long.parseLong(reader.getTelegram()), message.getMessage());
                 }
             }
             messageRepository.deleteAll();
         } catch (Exception e) {
-            System.out.println("нет книг для отправки уведомления читателям");
         }
     }
+
 
 }

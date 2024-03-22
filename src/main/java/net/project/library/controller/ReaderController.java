@@ -1,6 +1,5 @@
 package net.project.library.controller;
 
-import net.project.library.config.PasswordConfig;
 import net.project.library.model.Book;
 import net.project.library.model.Reader;
 import net.project.library.model.Messages;
@@ -24,18 +23,15 @@ public class ReaderController {
     private final BookService bookService;
 
     private final MessageService messageService;
-    //private final PasswordConfig passwordConfig;
 
     @Autowired
     public ReaderController(ReaderService readerService, BookService bookService, MessageService messageService) {
         this.readerService = readerService;
         this.bookService = bookService;
         this.messageService = messageService;
-        //this.passwordConfig = passwordConfig;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/readers")
     public String showFormWithAllReaders(Model model) {
         List<Reader> readers = readerService.findALL();
@@ -44,14 +40,12 @@ public class ReaderController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/reader-create")
     public String createReaderForm(Reader reader) {
         return "reader-create";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/reader-create")
     public String createReader(Reader reader) {
         readerService.saveReader(reader);
@@ -60,7 +54,6 @@ public class ReaderController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/reader-delete/{id}")
     public String deleteReader(@PathVariable("id") int id) {
         readerService.deleteById(id);
@@ -68,16 +61,14 @@ public class ReaderController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("reader-update/{id}")
-    public String updateReaderForm(@PathVariable("id") int id, Model model){
+    public String updateReaderForm(@PathVariable("id") int id, Model model) {
         Reader reader = readerService.findById(id);
         model.addAttribute(reader);
         return "/reader-update";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("reader-update")
     public String updateReader(Reader reader) {
         readerService.saveReader(reader);
@@ -85,16 +76,13 @@ public class ReaderController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("add-take-book/{id}")
     public String showAddTakenBookForm(@PathVariable("id") int id, Model model) {
         Reader reader = readerService.findById(id);
         List<Reader> readers = readerService.findALL();
         List<Book> listBook = bookService.findALL();
-        for (Reader readerFromList : readers)
-        {
-            if (listBook.contains(readerFromList.getBookId()))
-            {
+        for (Reader readerFromList : readers) {
+            if (listBook.contains(readerFromList.getBookId())) {
                 listBook.remove(readerFromList.getBookId());
             }
         }
@@ -104,44 +92,28 @@ public class ReaderController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
-    @PostMapping ("add-take-book")
+    @PostMapping("add-take-book")
     public String addTakenBook(Reader reader) {
         readerService.saveReader(reader);
         return "redirect:/readers";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("reader-delete-take-book/{id}")
     public String deleteTakenBook(@PathVariable("id") int id, Model model) {
         Reader reader = readerService.findById(id);
-        Book book = bookService.findById(reader.getBookId().getId());
-        String nameBook = book.getName();
-        reader.setBookId(null);
+        Messages message = new Messages();
+        if (reader.getBookId() != null) {
+            Book book = bookService.findById(reader.getBookId().getId());
+            String nameBook = book.getName();
+            message.setMessage("Книга " + nameBook + " вернулась в библиотеку");
+            System.out.println(message);
+            reader.setBookId(null);
+        }
         readerService.saveReader(reader);
-        Messages message = new Messages("Книга " + nameBook + " вернулась в библиотеку");
-        System.out.println(message);
-        messageService.saveMessage(message);
+        if (reader.getBookId() != null) {
+            messageService.saveMessage(message);
+        }
         return "redirect:/readers";
     }
-
-
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @GetMapping("reader-book-delete/{id}")
-//    public String deleteTakenBook(@PathVariable("id") int id, Model model) {
-//        Reader reader = readerService.findById(id);
-//
-//        model.addAttribute(reader);
-//        return "/reader-delete-take-book";
-//    }
-
-
-//    @GetMapping("/reader-delete/{id}")
-//    public String DeleteTakenBook(@PathVariable("id") int id) {
-//        Reader reader = readerService.findById(id);
-//        reader.deleteBookToReader();
-//        readerService.deleteById(id);
-//        return "redirect:/readers";
-//    }
 }

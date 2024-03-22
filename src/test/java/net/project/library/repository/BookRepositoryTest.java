@@ -1,7 +1,6 @@
 package net.project.library.repository;
 
 import net.project.library.model.Book;
-import net.project.library.repository.BookRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

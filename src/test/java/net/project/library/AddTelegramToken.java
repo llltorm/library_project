@@ -1,14 +1,10 @@
 package net.project.library;
 
-import net.project.library.model.Book;
 import net.project.library.model.Reader;
 import net.project.library.repository.ReaderRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 
 @DataJpaTest
 public class AddTelegramToken {
@@ -22,6 +18,8 @@ public class AddTelegramToken {
         reader.setName("Admin Admin");
         reader.setEmail("mail@mail.ru");
         reader.setTelegram("343245657");
+        reader.setPassword("$2y$10$doARLHH1dHUCEBPgLW8xpuzpj9LJwBtBzo7rAb4Erin.P625U4tIG");
+        reader.setRole("USER");
         repo.save(reader);
     }
 

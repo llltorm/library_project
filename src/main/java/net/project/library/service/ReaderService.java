@@ -2,8 +2,6 @@ package net.project.library.service;
 
 import net.project.library.model.Reader;
 import net.project.library.repository.ReaderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
