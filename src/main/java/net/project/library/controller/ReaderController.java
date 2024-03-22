@@ -65,7 +65,6 @@ public class ReaderController {
     @GetMapping("reader-update/{id}")
     public String updateReaderForm(@PathVariable("id") int id, Model model) {
         Reader reader = readerService.findById(id);
-        System.out.println(reader);
         model.addAttribute(reader);
         return "/reader-update";
     }
