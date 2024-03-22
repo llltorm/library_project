@@ -8,6 +8,7 @@ import net.project.library.service.MessageService;
 import net.project.library.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,14 +65,14 @@ public class ReaderController {
     @GetMapping("reader-update/{id}")
     public String updateReaderForm(@PathVariable("id") int id, Model model) {
         Reader reader = readerService.findById(id);
+        System.out.println(reader);
         model.addAttribute(reader);
         return "/reader-update";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("reader-update")
-    public String updateReader(Reader reader) {
-        String password = reader.getPassword();
+    public String updateReader(Reader reader, Model model) {
         readerService.saveReader(reader);
         return "redirect:/readers";
     }
