@@ -1,6 +1,6 @@
 package net.project.library.telegram.bot;
 
-import net.project.library.telegram.BotConfig;
+import net.project.library.telegram.config.BotConfig;
 import net.project.library.model.Messages;
 import net.project.library.model.Reader;
 import net.project.library.repository.MessageRepository;
@@ -17,7 +17,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private final ReaderRepository readerRepository;
     private final MessageRepository messageRepository;
-    final BotConfig config;
+    private final BotConfig config;
 
     public TelegramBot(BotConfig config, MessageRepository messageRepository, ReaderRepository readerRepository) {
         this.config = config;
@@ -37,7 +37,6 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-
         if (update.hasMessage() && update.getMessage().hasText()) {
             String messageText = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
@@ -68,12 +67,12 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             execute(message);
         } catch (TelegramApiException e) {
-
+            System.out.println("Ошибка отправки сообщения в телеграмм" + e);
         }
     }
 
     @Scheduled(cron = "0 * * * * *")
-    private void AutomaticSendMessage() {
+    private void automaticSendMessage() {
         try {
             var messages = messageRepository.findAll();
             var readers = readerRepository.findAll();
@@ -84,8 +83,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             }
             messageRepository.deleteAll();
         } catch (Exception e) {
+            System.out.println("Ошибка отправки уведомления в телеграмм" + e);
         }
     }
-
-
 }
