@@ -8,6 +8,7 @@ import net.project.library.service.MessageService;
 import net.project.library.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,6 +66,9 @@ public class ReaderController {
     @PostMapping("/reader-create")
     public String createReader(Reader reader) {
         reader.setRole("USER");
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String BCriptPassword = encoder.encode(reader.getPassword());
+        reader.setPassword(BCriptPassword);
         readerService.saveReader(reader);
         return "redirect:/readers";
     }
