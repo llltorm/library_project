@@ -38,12 +38,14 @@
                     </div>
                 </li>
             </ul>
-            <form class="d-flex" role="button" th:action="@{/login}" method="post">
-                <input type="submit" value="Sign In"/>
-            </form>
-            <form class="d-flex" role="button" th:action="@{/logout}" method="post">
-                <input type="submit" value="Sign Out"/>
-            </form>
+            <div th:switch="${#authentication} ? ${#authorization.expression('isAuthenticated()')} : ${false}">
+                <form class="d-flex" role="button" th:case="${false}" th:action="@{/login}" method="post">
+                    <input type="submit" value="Sign In"/>
+                </form>
+                <form class="d-flex" role="button" th:case="${true}" th:action="@{/logout}" method="post">
+                    <input type="submit" value="Sign Out"/>
+                </form>
+            </div>
         </div>
     </div>
 </nav>

@@ -1,6 +1,11 @@
 package net.project.library.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
 
 @Entity
 @Table(name = "message_table")
@@ -13,11 +18,6 @@ public class Messages {
 
     @Column(name = "message")
     private String message;
-
-    public Messages(int id, String message) {
-        this.id = id;
-        this.message = message;
-    }
 
     public Messages(String message) {
         this.message = message;
@@ -44,9 +44,9 @@ public class Messages {
 
     @Override
     public String toString() {
-        return "Messages{" +
-                "id=" + id +
-                ", message='" + message + '\'' +
-                '}';
+        return "Messages{"
+                + "id=" + id
+                + ", message='" + message + '\''
+                + '}';
     }
 }

@@ -1,7 +1,13 @@
 package net.project.library.model;
 
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
 import java.util.Objects;
 
 @Entity
@@ -20,7 +26,6 @@ public class Reader {
     @OneToOne
     @JoinColumn(name = "book_id")
     private Book bookId;
-
     @Column(name = "password")
     private String password;
     @Column(name = "role")
@@ -97,10 +102,19 @@ public class Reader {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Reader reader = (Reader) o;
-        return id == reader.id && Objects.equals(name, reader.name) && Objects.equals(email, reader.email) && Objects.equals(telegram, reader.telegram) && Objects.equals(bookId, reader.bookId) && Objects.equals(password, reader.password) && Objects.equals(role, reader.role);
+        return id == reader.id && Objects.equals(name, reader.name)
+                && Objects.equals(email, reader.email)
+                && Objects.equals(telegram, reader.telegram)
+                && Objects.equals(bookId, reader.bookId)
+                && Objects.equals(password, reader.password)
+                && Objects.equals(role, reader.role);
     }
 
     @Override
@@ -110,15 +124,15 @@ public class Reader {
 
     @Override
     public String toString() {
-        return "Reader{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", telegram='" + telegram + '\'' +
-                ", bookId=" + bookId +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+        return "Reader{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", email='" + email + '\''
+                + ", telegram='" + telegram + '\''
+                + ", bookId=" + bookId
+                + ", password='" + password + '\''
+                + ", role='" + role + '\''
+                + '}';
     }
 
 }
