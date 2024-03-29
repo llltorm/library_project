@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -27,12 +26,11 @@ public class ReaderServiceTest {
     @InjectMocks
     private ReaderService readerService;
 
-
     @Test
     public void testFindAllReaders() {
         Reader reader = new Reader();
         Mockito.when(readerRepository.findAll()).thenReturn(List.of(reader));
-        List<Reader> result = readerService.findALL();
+        List<Reader> result = readerService.findAll();
         Assertions.assertNotNull(result);
         Assertions.assertEquals(1, result.size());
     }
@@ -51,15 +49,13 @@ public class ReaderServiceTest {
     public void testFindReaderById() {
         Reader reader = new Reader();
         reader.setId(100);
-        when(readerRepository.findById(100)).thenReturn(Optional.of(reader));
-        Optional returnedReader = readerRepository.findById(100);
-        Reader newReturnedReader = (Reader) returnedReader.get();
-        assertEquals(reader.getId(), newReturnedReader.getId());
-        verify(this.readerRepository).findById(100);
+        when(readerService.findById(100)).thenReturn(reader);
+        Reader returnedReader = readerService.findById(100);
+        assertEquals(reader.getId(), returnedReader.getId());
     }
 
     @Test
-    void deleteReader() {
+    public void deleteReader() {
         readerService.deleteById(1);
         verify(readerRepository).deleteById(1);
     }

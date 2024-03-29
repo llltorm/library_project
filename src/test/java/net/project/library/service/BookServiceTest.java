@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -30,7 +29,7 @@ public class BookServiceTest {
     public void testFindAllBooks() {
         Book book = new Book();
         Mockito.when(bookRepository.findAll()).thenReturn(List.of(book));
-        List<Book> result = bookService.findALL();
+        List<Book> result = bookService.findAll();
         Assertions.assertNotNull(result);
         Assertions.assertEquals(1, result.size());
     }
@@ -50,14 +49,13 @@ public class BookServiceTest {
     public void testFindBookById() {
         Book book = new Book();
         book.setId(1);
-        when(bookRepository.findById(1)).thenReturn(Optional.of(book));
-        Optional returnedBook = bookRepository.findById(1);
-        Book newReturnedBook = (Book) returnedBook.get();
-        assertEquals(book.getId(), newReturnedBook.getId());
+        when(bookService.findById(1)).thenReturn(book);
+        Book returnedBook = bookService.findById(1);
+        assertEquals(book.getId(), returnedBook.getId());
     }
 
     @Test
-    void deleteBook() {
+    public void deleteBook() {
         bookService.deleteById(1);
         verify(bookRepository).deleteById(1);
     }

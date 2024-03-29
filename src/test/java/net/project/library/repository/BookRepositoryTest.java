@@ -14,7 +14,6 @@ import java.util.Optional;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(true)
 public class BookRepositoryTest {
-
     @Autowired
     private BookRepository repo;
 
@@ -91,5 +90,4 @@ public class BookRepositoryTest {
         Assertions.assertTrue(isExistBeforeDelete);
         Assertions.assertFalse(notExistAfterDelete);
     }
-
 }

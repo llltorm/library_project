@@ -1,5 +1,6 @@
 package net.project.library.repository;
 
+import net.project.library.model.Book;
 import net.project.library.model.Reader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,13 +21,20 @@ public class ReaderRepositoryTest {
     @Test
     public void testAddNewReader() {
         Reader reader = new Reader();
+        Book book = new Book();
         reader.setName("Пётр Петров");
         reader.setEmail("mail@mail.ru");
         reader.setTelegram("343245657");
+        reader.setPassword("$2y$10$jfVkEQxfibt7moyJV4R.QeT0YEaJ.BZM1V9Qw.04/sja64Qquck1.");
+        reader.setBookId(book);
+        reader.setRole("USER");
         Reader saveReader = repo.save(reader);
         Assertions.assertEquals(saveReader.getName(), "Пётр Петров");
         Assertions.assertEquals(saveReader.getEmail(), "mail@mail.ru");
         Assertions.assertEquals(saveReader.getTelegram(), "343245657");
+        Assertions.assertEquals(saveReader.getPassword(), "$2y$10$jfVkEQxfibt7moyJV4R.QeT0YEaJ.BZM1V9Qw.04/sja64Qquck1.");
+        Assertions.assertEquals(saveReader.getBookId(), book);
+        Assertions.assertEquals(saveReader.getRole(), "USER");
     }
 
     @Test
