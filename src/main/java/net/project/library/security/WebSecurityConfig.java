@@ -13,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Конфигурационный класс безопасности.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -25,11 +28,21 @@ public class WebSecurityConfig {
         this.readerRepository = readerRepository;
     }
 
+    /**
+     * Компонент, используемый для загрузки пользовательских данных.
+     *
+     * @return - извлечённые данные пользователя
+     */
     @Bean
     protected UserDetailsService userDetailsService() {
         return new CustomUserDetailsService(readerRepository);
     }
 
+    /**
+     * Метод Аутентификации, позволяющий идентифицировать пользователей сайта.
+     *
+     * @return - возвращает список аутентифицированных пользователей
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -38,6 +51,12 @@ public class WebSecurityConfig {
         return provider;
     }
 
+    /**
+     * Фильтры безопасности для установления прав пользователя и безопасности.
+     *
+     * @param http - Объект безопасности http запросов
+     * @return - фильтры для авторизации пользователя
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http

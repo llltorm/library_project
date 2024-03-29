@@ -12,6 +12,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+/**
+ * Класс для взаимодействия пользователя с телеграмм ботом.
+ */
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
 
@@ -25,16 +28,29 @@ public class TelegramBot extends TelegramLongPollingBot {
         this.readerRepository = readerRepository;
     }
 
+    /**
+     * Метод возвращает имя пользователя в телеграмм.
+     */
     @Override
     public String getBotUsername() {
         return config.getBotName();
     }
 
+    /**
+     * Метод возвращает токен телеграмм бота, который должен отправить сообщение.
+     */
     @Override
     public String getBotToken() {
         return config.getToken();
     }
 
+    /**
+     * Метод, который срабатывает каждый раз при получении ботом нового сообщения
+     * от пользователя.
+     *
+     * @param update - класс телеграмм бота, в котором хранится информация о пользователе,
+     *              отправившим сообщение
+     */
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
@@ -55,11 +71,23 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     }
 
+    /**
+     * Метод ответа пользователя на от вет /start.
+     *
+     * @param chatId - идентификатор чата, куда нужно отправить сообщение
+     * @param name - ник пользователя, которому нужно отправить сообщение
+     */
     private void startCommandReceived(long chatId, String name) {
         String answer = "Hi " + name + ", nice to meet you!";
         sendMessage(chatId, answer);
     }
 
+    /**
+     * Метод отправки текстового сообщения пользователю.
+     *
+     * @param chatId - идентификатор чата, куда нужно отправить сообщение
+     * @param textToSend - текст, который необходимо отправить пользователю
+     */
     private void sendMessage(long chatId, String textToSend) {
         SendMessage message = new SendMessage();
         message.setChatId(String.valueOf(chatId));
@@ -71,6 +99,9 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Метод автоматической отправки уведомления о возвращении книги в библиотеку.
+     */
     @Scheduled(cron = "0 * * * * *")
     private void automaticSendMessage() {
         try {

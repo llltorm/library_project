@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
+/**
+ * Контроллер, обрабатывающий запросы, которые касаются книг в библиотеке.
+ */
 @Controller
 public class BookController {
     private final BookService bookService;
@@ -21,6 +24,12 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    /**
+     * Метод для полужения из БД всех книг и их отображения на странице.
+     *
+     * @param model - в модель добавляются все книги, найденные в БД
+     * @return - возвращается HTML страница со всеми книгами
+     */
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @GetMapping("/books")
     public String findAll(Model model) {
@@ -29,12 +38,20 @@ public class BookController {
         return "book-list";
     }
 
+    /**
+     * Метод отображения формы создания новой книги.
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/book-create")
     public String createBookForm(Book book) {
         return "book-create";
     }
 
+    /**
+     * Метод сохраняет данные, введённые пользователем на HTML странице в БД.
+     *
+     * @param book - экземпляр книги, сохраняемой в БД
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/book-create")
     public String createBook(Book book) {
@@ -42,6 +59,11 @@ public class BookController {
         return "redirect:/books";
     }
 
+    /**
+     * Метод удаления книги по id.
+     *
+     * @param id - идентификатор удаляемой книги
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/book-delete/{id}")
     public String deleteBook(@PathVariable("id") int id) {
@@ -49,6 +71,12 @@ public class BookController {
         return "redirect:/books";
     }
 
+    /**
+     * Метод отображения формы обновления книги.
+     *
+     * @param id - идентификатор обновляемой книги
+     * @param model - содержит книгу, которая будет обновлена
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("book-update/{id}")
     public String updateBookForm(@PathVariable("id") int id, Model model) {
@@ -57,6 +85,11 @@ public class BookController {
         return "/book-update";
     }
 
+    /**
+     * Метод обновляет данные, введённые пользователем на HTML странице в БД.
+     *
+     * @param book - экземпляр книги, обновляемой в БД
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("book-update")
     public String updateBook(Book book) {

@@ -7,10 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 
+/**
+ * Сущность сообщения, которое будет отправлено всем читателям в телеграмм чате.
+ */
 @Entity
 @Table(name = "message_table")
 public class Messages {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

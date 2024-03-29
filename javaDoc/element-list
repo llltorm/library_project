@@ -1,0 +1,9 @@
+net.project.library
+net.project.library.config
+net.project.library.controller
+net.project.library.model
+net.project.library.repository
+net.project.library.security
+net.project.library.service
+net.project.library.telegram.bot
+net.project.library.telegram.config

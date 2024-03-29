@@ -7,7 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 
-
+/**
+ * Сущность книги, хранящейся в библиотеке.
+ */
 @Entity
 @Table(name = "books")
 public class Book {

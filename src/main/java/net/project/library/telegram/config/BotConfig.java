@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/**
+ * Конфигурационный класс для телеграмм бота.
+ */
 @Configuration
 @EnableScheduling
 @Data

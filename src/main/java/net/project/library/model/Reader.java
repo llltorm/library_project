@@ -10,6 +10,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 import java.util.Objects;
 
+/**
+ * Сущность читателя, зарегистрированного в библиотеке.
+ */
 @Entity
 @Table(name = "readers")
 public class Reader {

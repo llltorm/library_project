@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Сервис для взаимодействия с сообщениями читателю в телеграмме.
+ */
 @Service
 public class MessageService {
 
@@ -17,18 +20,30 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
+    /**
+     * Метод поиска сообщения по id.
+     */
     public Messages findById(int id) {
         return messageRepository.getOne(id);
     }
 
+    /**
+     * Метод поиска всех сообщений.
+     */
     public List<Messages> findAll() {
         return messageRepository.findAll();
     }
 
+    /**
+     * Метод сохранения сообщения.
+     */
     public Messages saveMessage(Messages messages) {
         return messageRepository.save(messages);
     }
 
+    /**
+     * Метод удаления сообщения по id.
+     */
     public void deleteById(int id) {
         messageRepository.deleteById(id);
     }
