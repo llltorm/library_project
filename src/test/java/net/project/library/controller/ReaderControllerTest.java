@@ -56,13 +56,13 @@ public class ReaderControllerTest {
     }
 
     @Test
-    void test_showCreateReaderForm() throws Exception {
+    public void test_showCreateReaderForm() throws Exception {
         mockMvc.perform(get("/reader-create"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void test_findAllReader() throws Exception {
+    public void test_findAllReader() throws Exception {
         List<Reader> readerList = Arrays.asList(new Reader("Пётр петров", "wer@mail.ru", "1234567890"),
                 new Reader("Алексей Алексеев", "asd@mail.ru", "0987654321"));
         when(readerService.findAll()).thenReturn(readerList);
@@ -73,7 +73,7 @@ public class ReaderControllerTest {
 
 
     @Test
-    void test_updateReader() throws Exception {
+    public void test_updateReader() throws Exception {
         Reader reader = new Reader("Пётр петров", "wer@mail.ru", "1234567890");
         when(readerService.findById(reader.getId())).thenReturn(reader);
         mockMvc.perform(post("/reader-update")
@@ -84,7 +84,7 @@ public class ReaderControllerTest {
     }
 
     @Test
-    void test_showUpdateReaderForm() throws Exception {
+    public void test_showUpdateReaderForm() throws Exception {
         Reader reader = new Reader("Пётр петров", "wer@mail.ru", "1234567890");
         when(readerService.findById(reader.getId())).thenReturn(reader);
         mockMvc.perform(get("/reader-update/{id}", reader.getId()))
@@ -92,7 +92,7 @@ public class ReaderControllerTest {
     }
 
     @Test
-    void test_deleteReader() throws Exception {
+    public void test_deleteReader() throws Exception {
         Reader reader = new Reader("Пётр петров", "wer@mail.ru", "1234567890");
         doNothing().when(readerService).deleteById(reader.getId());
         mockMvc.perform(get("/reader-delete/{id}", reader.getId()))
@@ -100,7 +100,7 @@ public class ReaderControllerTest {
     }
 
     @Test
-    void test_showAddTakenBookForm() throws Exception {
+    public void test_showAddTakenBookForm() throws Exception {
         Reader reader = new Reader("Пётр петров", "wer@mail.ru", "1234567890");
         List<Book> bookList = Arrays.asList(new Book("Война и мир", "Лев Толстой"),
                 new Book("Преступление и наказание", "Фёдор Достоевский"));
@@ -112,7 +112,7 @@ public class ReaderControllerTest {
     }
 
     @Test
-    void test_addTakenBook() throws Exception {
+    public void test_addTakenBook() throws Exception {
         Reader reader = new Reader("Пётр петров", "wer@mail.ru", "1234567890");
         Book book = new Book("Война и мир", "Лев Толстой");
         reader.setBookId(book);
@@ -125,7 +125,7 @@ public class ReaderControllerTest {
     }
 
     @Test
-    void test_deleteTakenBook() throws Exception {
+    public void test_deleteTakenBook() throws Exception {
         Reader reader = new Reader("Пётр петров", "wer@mail.ru", "1234567890");
         Book book = new Book("Война и мир", "Лев Толстой");
         Messages message = new Messages("Hello world");

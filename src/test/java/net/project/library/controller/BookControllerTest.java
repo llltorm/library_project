@@ -46,13 +46,13 @@ public class BookControllerTest {
     }
 
     @Test
-    void test_showCreateBookForm() throws Exception {
+    public void test_showCreateBookForm() throws Exception {
         mockMvc.perform(get("/book-create"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void test_findAllBook() throws Exception {
+    public void test_findAllBook() throws Exception {
         List<Book> bookList = Arrays.asList(new Book("Война и мир", "Лев Толстой"),
                 new Book("Преступление и наказание", "Фёдор Достоевский"));
         when(bookService.findAll()).thenReturn(bookList);
@@ -62,7 +62,7 @@ public class BookControllerTest {
     }
 
     @Test
-    void test_updateBook() throws Exception {
+    public void test_updateBook() throws Exception {
         Book book = new Book("Война и мир", "Лев Толстой");
         when(bookService.findById(book.getId())).thenReturn(book);
         mockMvc.perform(post("/book-update")
@@ -73,7 +73,7 @@ public class BookControllerTest {
     }
 
     @Test
-    void test_showUpdateBookForm() throws Exception {
+    public void test_showUpdateBookForm() throws Exception {
         Book book = new Book("Война и мир", "Лев Толстой");
         when(bookService.findById(book.getId())).thenReturn(book);
         mockMvc.perform(get("/book-update/{id}", book.getId()))
@@ -81,7 +81,7 @@ public class BookControllerTest {
     }
 
     @Test
-    void test_deleteBook() throws Exception {
+    public void test_deleteBook() throws Exception {
         Book book = new Book("Война и мир", "Лев Толстой");
         doNothing().when(bookService).deleteById(book.getId());
         mockMvc.perform(get("/book-delete/{id}", book.getId()))
