@@ -21,7 +21,7 @@ public class BookService {
         return bookRepository.getOne(id);
     }
 
-    public List<Book> findALL() {
+    public List<Book> findAll() {
         return bookRepository.findAll();
     }
 

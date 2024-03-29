@@ -21,7 +21,7 @@ public class MessageService {
         return messageRepository.getOne(id);
     }
 
-    public List<Messages> findALL() {
+    public List<Messages> findAll() {
         return messageRepository.findAll();
     }
 
@@ -32,5 +32,4 @@ public class MessageService {
     public void deleteById(int id) {
         messageRepository.deleteById(id);
     }
-
 }

@@ -18,7 +18,7 @@ public class ReaderService {
         return readerRepository.getOne(id);
     }
 
-    public List<Reader> findALL() {
+    public List<Reader> findAll() {
         return readerRepository.findAll();
     }
 
@@ -29,7 +29,5 @@ public class ReaderService {
     public void deleteById(int id) {
         readerRepository.deleteById(id);
     }
-
-
 }
 

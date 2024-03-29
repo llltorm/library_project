@@ -1,7 +1,6 @@
 package net.project.library.security;
 
 import net.project.library.repository.ReaderRepository;
-import net.project.library.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +26,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    UserDetailsService userDetailsService() {
+    protected UserDetailsService userDetailsService() {
         return new CustomUserDetailsService(readerRepository);
     }
 
