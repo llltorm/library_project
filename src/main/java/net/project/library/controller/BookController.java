@@ -14,7 +14,6 @@ import java.util.List;
 
 @Controller
 public class BookController {
-
     private final BookService bookService;
 
     @Autowired
@@ -25,7 +24,7 @@ public class BookController {
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @GetMapping("/books")
     public String findAll(Model model) {
-        List<Book> books = bookService.findALL();
+        List<Book> books = bookService.findAll();
         model.addAttribute("books", books);
         return "book-list";
     }
@@ -63,13 +62,5 @@ public class BookController {
     public String updateBook(Book book) {
         bookService.saveBook(book);
         return "redirect:/books";
-    }
-
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("book-returned")
-    public String updateBook(@PathVariable("id") int id, Model model) {
-        Book book = bookService.findById(id);
-        model.addAttribute(book);
-        return "/book-update";
     }
 }

@@ -8,7 +8,6 @@ import net.project.library.service.MessageService;
 import net.project.library.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,7 @@ public class ReaderController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/readers")
     public String showFormWithAllReaders(Model model) {
-        List<Reader> readers = readerService.findALL();
+        List<Reader> readers = readerService.findAll();
         model.addAttribute("readers", readers);
         return "reader-list";
     }
@@ -49,8 +48,8 @@ public class ReaderController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/reader-create")
     public String createReader(Reader reader) {
-        readerService.saveReader(reader);
         reader.setRole("USER");
+        readerService.saveReader(reader);
         return "redirect:/readers";
     }
 
@@ -80,8 +79,8 @@ public class ReaderController {
     @GetMapping("add-take-book/{id}")
     public String showAddTakenBookForm(@PathVariable("id") int id, Model model) {
         Reader reader = readerService.findById(id);
-        List<Reader> readers = readerService.findALL();
-        List<Book> listBook = bookService.findALL();
+        List<Reader> readers = readerService.findAll();
+        List<Book> listBook = bookService.findAll();
         for (Reader readerFromList : readers) {
             if (listBook.contains(readerFromList.getBookId())) {
                 listBook.remove(readerFromList.getBookId());
@@ -102,14 +101,18 @@ public class ReaderController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("reader-delete-take-book/{id}")
     public String deleteTakenBook(@PathVariable("id") int id, Model model) {
-        Reader reader = readerService.findById(id);
-        Book book = bookService.findById(reader.getBookId().getId());
-        String nameBook = book.getName();
-        reader.setBookId(null);
-        readerService.saveReader(reader);
-        Messages message = new Messages("Книга " + nameBook + " вернулась в библиотеку");
-        System.out.println(message);
-        messageService.saveMessage(message);
+        try {
+            Reader reader = readerService.findById(id);
+            Book book = bookService.findById(reader.getBookId().getId());
+            String nameBook = book.getName();
+            reader.setBookId(null);
+            readerService.saveReader(reader);
+            Messages message = new Messages("Книга " + nameBook + " вернулась в библиотеку");
+            System.out.println(message);
+            messageService.saveMessage(message);
+        } catch (Exception e) {
+            System.out.println("Нет книги для удаления");
+        }
         return "redirect:/readers";
     }
 }
