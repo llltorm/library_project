@@ -1,4 +1,4 @@
-package net.project.library.telegram;
+package net.project.library.telegram.config;
 
 import net.project.library.telegram.bot.TelegramBot;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -11,8 +11,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 @Component
 public class BotInitializer {
 
-    final
-    TelegramBot bot;
+    private final TelegramBot bot;
 
     public BotInitializer(TelegramBot bot) {
         this.bot = bot;
@@ -24,7 +23,7 @@ public class BotInitializer {
         try {
             telegramBotsApi.registerBot(bot);
         } catch (TelegramApiException e) {
-
+            System.out.println(e);
         }
     }
 }
