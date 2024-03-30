@@ -66,9 +66,11 @@ public class ReaderController {
     @PostMapping("/reader-create")
     public String createReader(Reader reader) {
         reader.setRole("USER");
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String BCriptPassword = encoder.encode(reader.getPassword());
-        reader.setPassword(BCriptPassword);
+        if (reader.getPassword() != null) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String bcriptPassword = encoder.encode(reader.getPassword());
+            reader.setPassword(bcriptPassword);
+        }
         readerService.saveReader(reader);
         return "redirect:/readers";
     }
